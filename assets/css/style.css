@@ -324,6 +324,7 @@ body {
 
 .w-100 {
   width: 100%;
+  margin-top: 100px;
 }
 
 .section-subtitle {
@@ -650,7 +651,7 @@ body {
 .feature .container,
 .feature-list {
   display: grid;
-  gap: 60px;
+  gap: 70px;
 }
 
 .feature-card .card-icon {
@@ -1391,7 +1392,7 @@ body {
 
   .feature .container {
     grid-template-columns: 1fr 1fr;
-    gap: 30px;
+    gap: 70px;
   }
 
   /**
