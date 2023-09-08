@@ -13,14 +13,12 @@ const ViewBlogBy = () => {
       const items_ = localStorage.getItem("items");
       const title_ = localStorage.getItem("title");
       const category_ = localStorage.getItem("category");
-      console.log(title, items, category) 
       if (items_)
         setItems(JSON.parse(items_));
       if(title_)
         setTitle(title_);
         if(category_)
         setCategory(category_);
-        console.log(title, items, category)
     }
     return () => {}
   }, []);
@@ -49,6 +47,8 @@ const ViewBlogBy = () => {
               <div className={classes.blogContentsItem}>
                 {/* <div className={classes.blogImage}> */}
                 <Image
+                width={500}
+                height={300}
                   className={classes.blogImage}
                   src={item.value}
                   alt="blog-image"

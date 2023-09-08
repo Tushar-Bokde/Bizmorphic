@@ -53,7 +53,7 @@ export default function BlogWriter({ type, blogData }: any) {
   });
   const [ifFormIsRemoved, setIfFormIsRemoved] = useState(false);
   const [formSearchValue, setFormSearchValue] = useState("");
-
+  console.log(items)
   // For tool List i.e. for adding and removing blog items
   function addHeading(id?: string, index?: string) {
     setItems([
@@ -190,15 +190,16 @@ export default function BlogWriter({ type, blogData }: any) {
   const handleImageChange = async (e: any, contentId: string | undefined) => {
     e.preventDefault();
     let data = new FormData();
-    data.append("image", e.target.files[0], "image.png");
-
-    const apiData = await routes.HR_TOOLS.APIS.GET_IMAGE_URL_FROM_AWS(data);
+    const image = e.target.files[0]
+    data.append("image", image, "image.png");
+    data.append("image_name", image.name)
+    const apiData = await routes.BLOG_MS.APIS.UPLOAD_LOCAL_IMAGE_BLOG(data)
     console.log("this is the api data",apiData,)
     const newItems = Array.from(items).map((item) => {
       if (item.id === contentId) {
         return {
           ...item,
-          value: apiData.url,
+          value: apiData.location,
         };
       } else {
         return item;
@@ -709,11 +710,11 @@ export default function BlogWriter({ type, blogData }: any) {
                                             }}
                                           >
                                             <Image
+                                            width={500}
+                                            height={300}
                                               src={item.value}
                                               alt="Image"
                                               style={{
-                                                width: "400px",
-                                                height: "220px",
                                                 margin: "2em auto",
                                               }}
                                             />
