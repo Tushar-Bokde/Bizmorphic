@@ -1,4 +1,5 @@
 import React from 'react'
+import Login from './components/login/Login'
 
 function Header() {
   return (
@@ -7,10 +8,6 @@ function Header() {
      <script async src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
         <title>Bizmorphic</title>
         <link rel="shortcut icon" href="./favicon-16x16.png" type="image/x-icon" />
-        <script src="./assets/js/script.js" defer></script>
-
-        <script async  type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-        <script async  src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
         <div className="container">
             <a href="#" className="logo">Bizmorphic</a>
@@ -44,7 +41,11 @@ function Header() {
                     <li className="navbar-item">
                         <a href="/blogs" className="navbar-link" data-nav-link>Blog</a>
                     </li>
+                    <li className="navbar-item">
+                    <a  className="navbar-link" data-nav-link><Login/></a>
+                    </li>
                 </ul>
+                
             </nav>
 
             <button className="nav-open-btn" aria-label="open menu" data-nav-toggler>
