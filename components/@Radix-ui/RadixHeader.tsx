@@ -36,6 +36,10 @@ const routes: Route[] = [
     href: "#blog",
     label: "Blogs",
   },
+  {
+    href: "https://calendly.com/mayur_tikundi/30min",
+    label: "Contact Us",
+  },
 ];
 
 const RadixHeader = () => {
@@ -65,18 +69,18 @@ const RadixHeader = () => {
               </SheetContent>
             </Sheet>
             <Link href={"/"} className="ml-4 lg:ml-0">
-              <h1 className="font-bold">Bizmorphic</h1>
+              <h1 className=" text-2xl font-bold">Bizmorphic</h1>
             </Link>
           </div>
           <nav className=" mx-6 flex items-center space-x-4 lg:space-x-6 hidden md:block">
             {navRoutes(routes)}
           </nav>
           <div className="flex items-center">
-            <ProfileButton />
+           
             <Button
-              variant="ghost"
+              variant={"link"}
               aria-label="Toggle Theme"
-              className="mr-6"
+              className="mr-2"
               onClick={() => {
                 setTheme(theme === "dark" ? "light" : "dark");
               }}
@@ -85,7 +89,8 @@ const RadixHeader = () => {
               <Moon className="absolute top-1/3 h-6 w-6 rotate-90 scale-0 transition-all dark:-rotate-0 dark:scale-100" />
               <span className="sr-only">Toggle Theme</span>
             </Button>
-            <Button className="bg-blue " variant="outline">
+
+            <Button className="bg-blue hidden md:block ml-4 " variant="outline">
               {" "}
               <Link
                 href="https://calendly.com/mayur_tikundi/30min"

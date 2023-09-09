@@ -256,8 +256,8 @@ export default function BlogWriter({ type, blogData }: any) {
 
   function newItemsToGet() {
     const indexes = (str: string, char: string) => {
-      const indexes = [];
-      for (let i = 0; i < str.length; i++) {
+      const indexes : number[]= [];
+      for (let i:number = 0; i < str.length; i++) {
         if (str[i] === char) {
           indexes.push(i);
           i++;

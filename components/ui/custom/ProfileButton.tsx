@@ -12,6 +12,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "../avatar";
 import { signOut, useSession } from "next-auth/react";
 import Login from "../../login/Login";
 import Link from "next/link";
+import { Button } from "../button";
 const ProfileButton = () => {
   const { data: session } = useSession();
   return (
@@ -37,7 +38,7 @@ const ProfileButton = () => {
                 signOut();
               }}
             >
-              Log out
+            <Button>Log out</Button> 
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

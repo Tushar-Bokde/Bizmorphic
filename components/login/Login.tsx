@@ -1,17 +1,18 @@
 "use client";
 import React from "react";
-import {  signIn  } from "next-auth/react";
+import { signIn } from "next-auth/react";
+import { Button } from "../ui/button";
 const Login = () => {
-
   return (
     <div>
-      <button
+      <Button 
+        variant={'default'}
         onClick={() => {
           signIn();
         }}
       >
         Login
-      </button>
+      </Button>
     </div>
   );
 };
