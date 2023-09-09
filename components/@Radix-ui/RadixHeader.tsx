@@ -38,7 +38,7 @@ const routes: Route[] = [
   },
   {
     href: "https://calendly.com/mayur_tikundi/30min",
-    label: "Contact Us",
+    label: "Contact Us 🤙",
   },
 ];
 
@@ -90,15 +90,7 @@ const RadixHeader = () => {
               <span className="sr-only">Toggle Theme</span>
             </Button>
 
-            <Button className="bg-blue hidden md:block ml-4 " variant="outline">
-              {" "}
-              <Link
-                href="https://calendly.com/mayur_tikundi/30min"
-                className="btn btn-primary has-before has-after"
-              >
-                Contact Us 🤙
-              </Link>
-            </Button>
+          
           </div>
         </div>
       </Container>

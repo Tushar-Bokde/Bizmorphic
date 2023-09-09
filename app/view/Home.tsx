@@ -153,7 +153,7 @@ const Home = () => {
     <>
       <article>
         <section className="section hero" id="home" aria-label="hero">
-          <div className="container">
+          <div className="container grid grid-cols-1 md:grid-cols-2 ">
             <div className="hero-content">
               <h1 className="h1 pt-14 text-4xl font-semibold fon hero-title">
                 Metamorphosing Your{" "}
@@ -173,7 +173,7 @@ const Home = () => {
                 <Button
                   variant={"secondary"}
                   size={"lg"}
-                  className=" bg-blue-600 mr-6 cursor-pointer hover:bg-blue-500 text-white"
+                  className=" bg-blue-600 dark:bg-blue-950 dark:hover:bg-blue-900 mr-6 cursor-pointer hover:bg-blue-500 text-white"
                 >
                   <a
                     href="https://calendly.com/mayur_tikundi/30min"
@@ -193,7 +193,7 @@ const Home = () => {
               </div>
 
               <ul className="social-list flex py-3 ">
-                <li className="p-2 bg-gray-100 rounded-lg mr-2">
+                <li className="p-2 bg-gray-100 dark:bg-gray-800 rounded-lg mr-2">
                   <a
                     href="https://www.facebook.com/home.php"
                     className="social-link "
@@ -202,7 +202,7 @@ const Home = () => {
                     <Facebook />
                   </a>
                 </li>
-                <li className="p-2 bg-gray-100 rounded-lg mx-2">
+                <li className="p-2 bg-gray-100 dark:bg-gray-800  rounded-lg mx-2">
                   <a
                     href="#"
                     className="social-link"
@@ -211,7 +211,7 @@ const Home = () => {
                     <Youtube />
                   </a>
                 </li>
-                <li className="p-2 bg-gray-100 rounded-lg mx-2">
+                <li className="p-2 bg-gray-100 dark:bg-gray-800  rounded-lg mx-2">
                   <a
                     href="https://www.instagram.com/bizmorphic/"
                     className="social-link"
@@ -236,13 +236,17 @@ const Home = () => {
         </section>
 
         <section
-          className="section service py-14  bg-gray-100"
+          className="section service py-14 "
           id="service"
           aria-label="service"
         >
           <div className="container">
+          <p className="text-lg flex py-2 items-center justify-center section-subtitle has-before ">
+                <li className="list-disc w-6 text-yellow-300 text-4xl "></li>Why
+                Our Services
+              </p>
             <p className="section-subtitle has-before  font-semibold text-center">
-              Our Services
+             
             </p>
 
             <h2 className="h2 font-bold text-4xl section-title text-center">
@@ -253,7 +257,7 @@ const Home = () => {
               </span>
             </h2>
 
-            <ul className="grid-list">
+            <ul className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
               {services.map((e: serviceCard, i: number) => {
                 return (
                   <li key={i}>
@@ -270,15 +274,15 @@ const Home = () => {
           id="feature"
           aria-label="feature"
         >
-          <div className="container">
-            <div className="feature-banner">
+          <div className="container  grid  grid-cols-1 md:grid-cols-2">
+            <div className="feature-banner md:flex items-center justify-center ">
               <Image
                 src="/assets/images/feature-banner.png"
                 width="582"
                 height="585"
                 loading="lazy"
                 alt="feature banner"
-                className="w-100"
+                className=""
               />
             </div>
 
@@ -384,17 +388,17 @@ const Home = () => {
               </span>
             </h2>
 
-            <ul className="filter-list flex flex-wrap justify-center">
+            <ul className="filter-list flex flex-wrap py-12 justify-center">
               {projects.map((e: WorkCard, i: number) => {
                 return (
                   <>
                     <li key={i} className="p-1">
-                      <Button
+                      <Button 
                         variant={"outline"}
                         onClick={() => {
-                          setProduct(e);
+                          // setProduct(e);
                         }}
-                        className="filter-btn active"
+                        className="filter-btn p-4 active"
                         data-filter-btn
                       >
                         {e.product}
@@ -405,28 +409,124 @@ const Home = () => {
               })}
             </ul>
 
-            <ul className="grid-list">
-              <li className="py-6">
-                <div className="project-card">
-                  <div className="card-banner img-holder">
-                    <Image
-                      src={product.imageHref}
-                      width="416"
-                      height="429"
+            <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 ">
+          
+                <li  className="py-6 object-contain sm: col-span-2 md:col-span-2 ">
+                <div className="project-card ">
+                  <div className="card-banner ">
+                    <img   
+                      src={projects[0].imageHref}
                       loading="lazy"
                       alt="Mobile App Design"
-                      className="img-cover"
+                      className="rounded-2xl"
                     />
                   </div>
 
                   <Button variant={"ghost"} className="card-content">
                     <h3 className="h3">
-                      <a href={product.href} className="card-title">
-                        {product.product}
+                      <a href={projects[0].href} className="card-title">
+                        {projects[0].product}
+                      </a>
+                    </h3><br/>
+                    <a href={projects[0].href} className="card-tag">
+                      {projects[0].description}
+                    </a>
+                  </Button>
+                </div>
+              </li>
+            
+              <li  className="py-6 rounded-2xl">
+                <div className="project-card">
+                  <div className=" card-banner img-holder">
+                    <img
+                      src={projects[1].imageHref}
+
+                      loading="lazy"
+                      alt="Mobile App Design"
+                      className=" object-cover rounded-2xl"
+                    />
+                  </div>
+
+                  <Button variant={"ghost"} className="card-content">
+                    <h3 className="h3">
+                      <a href={projects[1].href} className="card-title">
+                        {projects[1].product}
                       </a>
                     </h3>
-                    <a href={product.href} className="card-tag">
-                      {product.description}
+                    <a href={projects[1].href} className="card-tag">
+                      {projects[1].description}
+                    </a>
+                  </Button>
+                </div>
+              </li>
+              <li  className="py-6 rounded-2xl">
+                <div className="project-card">
+                  <div className="card-banner img-holder">
+                    <img
+                      src={projects[2].imageHref}
+
+                      loading="lazy"
+                      alt="Mobile App Design"
+                      className="object-cover rounded-2xl"
+                    />
+                  </div>
+
+                  <Button variant={"ghost"} className="card-content">
+                    <h3 className="h3">
+                      <a href={projects[2].href} className="card-title">
+                        {projects[2].product}
+                      </a>
+                    </h3>
+                    <a href={projects[2].href} className="card-tag">
+                      {projects[2].description}
+                    </a>
+                  </Button>
+                </div>
+              </li>
+              <li  className="py-6 rounded-2xl">
+                <div className="project-card">
+                  <div className="card-banner img-holder">
+                    <img
+                      src={projects[3].imageHref}
+                   
+                      loading="lazy"
+                      alt="Mobile App Design"
+                      className="object-cover rounded-2xl"
+                    />
+                  </div>
+
+                  <Button variant={"ghost"} className="card-content">
+                    <h3 className="h3">
+                      <a href={projects[3].href} className="card-title">
+                        {projects[3].product}
+                      </a><br/>
+                    </h3>
+                    <a href={projects[3].href} className="card-tag">
+                      {projects[3].description}
+                    </a>
+                  </Button>
+                </div>
+              </li>
+              <li  className="py-6 rounded-2xl">
+                <div className="project-card">
+                  <div className="card-banner img-holder">
+                    <img
+                      src={projects[4].imageHref}
+                  
+                      loading="lazy"
+                      alt="Mobile App Design"
+                      className="object-cover rounded-2xl"
+                    />
+                  </div>
+
+                  <Button variant={"ghost"} className="card-content">
+                    <h3 className="h3">
+                      <a href={projects[4].href} className="card-title">
+                        {projects[4].product}
+                      </a>
+                    </h3><br/>
+                    <a href={projects[4].href} className="card-tag">
+                      {projects[4].description}
                     </a>
                   </Button>
                 </div>
@@ -436,15 +536,13 @@ const Home = () => {
         </section>
 
         <section
-          className="section newsletter py-14 bg-blue-700 has-bg-image"
+          className="section newsletter py-14 bg-blue-700 dark:bg-blue-950 has-bg-image"
           aria-label="newsletter"
         >
-          <div className="container">
-            <div className="newsletter-banner">
-              <Image
+          <div className="container grid grid-cols-1 md:grid-cols-2 ">
+            <div className="newsletter-banner ">
+              <img
                 src="/assets/images/newsletter-banner.png"
-                width="355"
-                height="356"
                 loading="lazy"
                 alt="newsletter banner"
                 className="w-100"
@@ -452,7 +550,7 @@ const Home = () => {
             </div>
 
             <div className="newsletter-content">
-              <p className="text-lg flex items-center text-gray-200 section-subtitle has-before ">
+              <p className="text-lg flex items-center  dark:text-gray-100 text-gray-200 section-subtitle has-before ">
                 <li className="list-disc w-6 text-yellow-300 text-4xl "></li>Get
                 every update
               </p>
@@ -466,13 +564,13 @@ const Home = () => {
                   type="email"
                   name="email_address"
                   required
-                  className="email-field rounded-sm bg-blue-600 w-full h-10 py-6"
+                  className="email-field rounded-sm dark:bg-blue-900  bg-blue-600 w-full h-10 py-6"
                 />
 
                 <Button
                   type="submit"
                   variant={"secondary"}
-                  className=" bg-yellow-300 my-4 hover:bg-yellow-400"
+                  className=" bg-yellow-300 dark:bg-yellow-500 my-4 hover:bg-yellow-400"
                 >
                   <span className="span">Subscribe</span>
                   <ArrowRight />
