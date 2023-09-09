@@ -1,0 +1,75 @@
+.blogMainContainer {
+  width: 55%;
+  margin: 4rem auto;
+  display: flex;
+  flex-direction: column;
+  /* border: 1px solid; */
+  padding-bottom: 4rem;
+
+}
+
+.blogMainContainerMeta {
+  width: 100%;
+  margin: 1em auto;
+}
+
+.blogTitle {
+  width: 95%;
+  margin: 0 auto;
+  font-size: 2rem;
+}
+
+.blogInfo {
+  width: 85%;
+  margin: 0.25em;
+}
+
+.blogDate {
+  font-size: 0.6rem;
+}
+
+.blogAuthor {
+  font-size: 0.6rem;
+}
+
+.blogContents {
+  width: 100%;
+}
+
+.blogContentsItem {
+  width: 100%;
+  display: flex;
+  margin: 0 auto;
+}
+
+.blogHeading {
+  width: 95%;
+  font-size: 1.5rem;
+  margin: 1em auto;
+  color: orange;
+}
+
+.blogSubHeading {
+  width: 95%;
+  font-size: 1.5rem;
+  margin: 1em auto;
+  color: orange;
+}
+
+.blogImage {
+  margin: 2em auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.blogParagraph {
+  width: 95%;
+  margin: 1em auto;
+  font-size: 1rem;
+  word-wrap: break-word;
+  color: rgb(87, 84, 84);
+}
+
