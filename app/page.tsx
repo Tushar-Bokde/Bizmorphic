@@ -4,8 +4,8 @@ import Home from './view/Home'
 
 export default function App() {
   return (
-  <main>
-    <Home/>
+  <main >
+    <Home />
     </main>
   )
 }

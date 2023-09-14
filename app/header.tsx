@@ -62,9 +62,9 @@ function Header() {
     //     </div>
     // </header> */}
     // </>
-    <>
+    <div >
     <RadixHeader/>
-    </>
+    </div>
   )
 }
 

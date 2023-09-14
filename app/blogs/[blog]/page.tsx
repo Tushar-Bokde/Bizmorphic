@@ -1,11 +1,11 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import classes from "../../preview/ViewBlog.module.css"
+import classes from "../../preview/ViewBlog.module.css";
 import Image from "next/image";
 import routes from "../../utils/routes";
-
-
-
+import PopularBlogs from "@/components/ui/custom/blogspage/PopularBlogs";
+import { Avatar } from "@radix-ui/react-avatar";
+import { AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 interface Blog {
   _id: string;
@@ -14,7 +14,7 @@ interface Blog {
   category: Array<any>;
   contents: Array<any>;
   userid: string;
-  username: string;
+  name: string;
   createdOn: string;
   blogAuthentication: {
     approved: false;
@@ -34,7 +34,7 @@ const Blog = () => {
     category: [],
     contents: [],
     userid: "",
-    username: "",
+    name: "",
     createdOn: "",
     blogAuthentication: {
       approved: false,
@@ -53,8 +53,9 @@ const Blog = () => {
   useEffect(() => {
     const GetBlogs = async () => {
       const loc = window.location.pathname;
-      const title= loc.split("/").pop()?.replaceAll('%20', ' ')
+      const title = loc.split("/").pop()?.replaceAll("%20", " ");
       const response = await routes.BLOG_MS.APIS.GET_BLOG_BY_TITLE(title);
+      setBlog(response);
       setItems(response.contents);
       setTitle(response.title);
       setCategory(response.category);
@@ -64,52 +65,77 @@ const Blog = () => {
     return () => {};
   }, []);
   return (
-    <div className={classes.blogMainContainer}>
-      <div className={classes.blogMainContainerMeta}>
-        {title && <h2 className={classes.blogTitle}>{title}</h2>}
-        <div className={classes.blogInfo}>
-          <p className={classes.blogAuthor}></p>
-          <p className={classes.blogDate}></p>
+    <div className="max-w-6xl  mx-auto pt-12 px-6 md:p-24">
+      <div
+        className={`${classes.blogMainContainerMeta} grid grid-cols-1 md:grid-cols-2`}
+      >
+        <div className="my-auto ">
+          {title && (
+            <div className="w-full">
+              <h2 className=" text-4xl font-semibold">{title}</h2>
+            </div>
+          )}
+           <div className="flex p-4">
+            <div className="w-10 p-1 h-10 dark:bg-gray-900 rounded-3xl">
+              <Avatar>
+                <AvatarImage src={"/favicon-32x32.png"} />
+                <AvatarFallback>B</AvatarFallback>
+              </Avatar>
+            </div>
+            <div className="flex flex-col px-2 o">
+              <div>
+                <p className="text-xs"> {blog.name ?? "Anonymous"}</p>
+              </div>
+              <div>
+                <p className=" text-[.6rem] my-auto">{blog.createdOn}</p>
+              </div>
+            </div>
+          </div>
         </div>
+      
+        <div className="bg-black aspect-video relative">
+          <Image fill alt="Blog Thumnail" src="/assets/images/blog-4.png" />
+        </div>
+
       </div>
-      <div className={classes.blogContents}>
-        {items &&
-          items.map((item, index) => {
-            return item.type === "HEADING" ? (
-              <div className={classes.blogContentsItem}>
-                <h2 className={classes.blogHeading}>{item.value}</h2>
-              </div>
-            ) : item.type === "SUB_HEADING" ? (
-              <div className={classes.blogContentsItem}>
-                <h3 className={classes.blogSubHeading}>{item.value}</h3>
-              </div>
-            ) : item.type === "IMAGE" ? (
-              <div className={classes.blogContentsItem}>
-                {/* <div className={classes.blogImage}> */}
-                <Image
-                  width={500}
-                  height={300}
-                  className={classes.blogImage}
-                  src={item.value}
-                  alt="blog-image"
-                  // style={{ width: "90%", height: "100%" }}
-                />
-                {/* </div> */}
-              </div>
-            ) : item.type === "PARAGRAPH" ? (
-              <div className={classes.blogContentsItem}>
-                <p className={classes.blogParagraph}>{item.value}</p>
-              </div>
-            ) : item.type === "DOCUMENT" ? (
-              <div className={classes.blogContentsItem}>
-                <h2 className={classes.blogDocument}>
-                  Work In Progress For Document Showing
-                </h2>
-              </div>
-            ) : (
-              <div></div>
-            );
-          })}
+      <div className="grid grid-cols-1 md:grid-cols-4">
+        <div className={`${classes.blogContents} p-4 col-span-3 `}>
+          {items &&
+            items.map((item, index) => {
+              return item.type === "HEADING" ? (
+                <div className={classes.blogContentsItem}>
+                  <h2 className="text-2xl font-semibold text-orange-400 ">{item.value}</h2>
+                </div>
+              ) : item.type === "SUB_HEADING" ? (
+                <div >
+                  <h3 >{item.value}</h3>
+                </div>
+              ) : item.type === "IMAGE" ? (
+                <div className={`p-4  w-full `}>
+                  <div className=" flex  justify-center" >
+                  <Image
+                    width={500}
+                    height={300}
+                    src={item.value}
+                    alt="blog-image"
+                    // style={{ width: "90%", height: "100%" }}
+                  />
+                  </div>
+                </div>
+              ) : item.type === "PARAGRAPH" ? (
+                <div className="w-full">
+                  <p className=" max-w-3xl mx-auto break-words">{item.value}</p>
+                </div>
+              ) : item.type === "DOCUMENT" ? (
+                <div>
+                  <h2>Work In Progress For Document Showing</h2>
+                </div>
+              ) : (
+                <div></div>
+              );
+            })}
+        </div>
+       <PopularBlogs/>
       </div>
     </div>
   );

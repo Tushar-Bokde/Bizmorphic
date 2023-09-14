@@ -2,7 +2,7 @@ import { apiDelete, apiGet, apiPost, apiPostImage, apiPut } from "./Api";
 const routes = {
   BLOG_MS: {
     BASE_PATH: process.env.NEXT_PUBLIC_BLOGS_API_URL,
-    // BASE_PATH: "http://localhost:3001/blogms/api/v1",
+    BASE_PATH: "http://localhost:3001/blogms/api/v1",
     APIS: {
       // GET API
       GET_BLOG_CAMPAING_BY_ID: async (data) => {

@@ -4,12 +4,12 @@ import { useState, useEffect, Key } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import classes from "./BlogWriter.module.css"
 import { v4 as uuidv4 } from "uuid";
-import routes from "../utils/routes";
 import DocumentPage from "./document/DocumentPage";
 import Image from "next/image";
 import React from "react";
 import { useSession } from 'next-auth/react'
 import { useRouter } from "next/navigation";
+import routes from "../utils/routes";
 
 export interface Blog {
 
@@ -57,14 +57,6 @@ export default function BlogWriter({ type, blogData }: any) {
   });
   const [ifFormIsRemoved, setIfFormIsRemoved] = useState(false);
   const [formSearchValue, setFormSearchValue] = useState("");
-  console.log(session)
-  useEffect(()=>{ 
-    if(!session)
-    router.replace('/blogs')
-
-  },[session])
-
-
 
   // For tool List i.e. for adding and removing blog items
   function addHeading(id?: string, index?: string) {
@@ -113,7 +105,6 @@ export default function BlogWriter({ type, blogData }: any) {
   }
 
   function addImage(e:any ,id?: string, index?: string) {
-    console.log(e.target)
     setItems([
       ...items,
       {
@@ -320,8 +311,7 @@ export default function BlogWriter({ type, blogData }: any) {
       title
     );
     var parsedResponse;
-      console.log(blogForGivenTitle)
-    if (blogForGivenTitle.data === null) {
+    if (blogForGivenTitle.name) {
       try {
         if (type === "UPDATE" && newItems) {
           parsedResponse = await routes.BLOG_MS.APIS.UPDATE_BLOG({
@@ -336,15 +326,17 @@ export default function BlogWriter({ type, blogData }: any) {
             category: category,
             metaDescription,
           });
+
         } else {
           parsedResponse = await routes.BLOG_MS.APIS.SAVE_BLOG(data);
-          console.log(parsedResponse)
+          console.log("this is printed",parsedResponse)
         }
         const messageToAlert =
           type === "UPDATE" ? "Blog is Updated" : "Your Blog is Saved";
         window.alert(messageToAlert);
       } catch (error: any) {
         window.alert(`Something went Wrong, ${error}`);
+        console.log(error)
       }
     } else {
       window.alert("Title is Used Befor Please Use another Title");
@@ -370,22 +362,19 @@ export default function BlogWriter({ type, blogData }: any) {
   }, [type, blogData, ifFormIsRemoved]);
 
   return (
-    <div className={classes.blogWriterContainer}>
+    <div className={`${classes.blogWriterContainer} py-24 max-w-6xl mx-auto`} >
       {/* <IdleTimer ref={idleTimerRef} timeout={4000} onIdle={handleIdleChange}> */}
-      <header className="App-header">
+      <header className="App-header p-12">
+        <div className="flex p-4">
         <h1>{type === "UPDATE" ? "Update" : "Write"} Your Blog</h1>
-        <div
-          style={{
-            width: "80%",
-            margin: "2em auto",
-          }}
-        >
+        <div className="m-auto w-5/6">
           <input
             style={{
               width: "100%",
               padding: "0.5em",
             }}
             value={title}
+            className="border"
             onChange={(e) => {
               if (e.target.value.includes("-")) {
                 window.alert("Please Dont include '-' in Title");
@@ -394,12 +383,12 @@ export default function BlogWriter({ type, blogData }: any) {
               }
             }}
             placeholder="Give Your Blog Title....."
-          />
+          /></div>
         </div>
         <div
+        className="p-4"
           style={{
             display: "flex",
-            width: "70%",
             margin: "auto",
             justifyContent: "space-around",
             alignItems: "center",
@@ -407,9 +396,10 @@ export default function BlogWriter({ type, blogData }: any) {
         >
           <h3>Select Category For the Blog</h3>
           <div
+          className="w-full"
             style={{
               display: "flex",
-              width: "60%",
+
               justifyContent: "space-around",
             }}
           >
@@ -467,18 +457,16 @@ export default function BlogWriter({ type, blogData }: any) {
           </select> */}
         </div>
         <div
+        className="p-4"
           style={{
             display: "flex",
-            width: "80%",
-            margin: "2em auto 1em auto",
             justifyContent: "space-around",
             alignItems: "center",
           }}
         >
           <h3>Meta Description For Blog</h3>
-          <textarea
+          <textarea className="border w-5/6"
             style={{
-              width: "65%",
               margin: "auto",
               height: "150px",
               padding: "0.5em",
@@ -491,16 +479,17 @@ export default function BlogWriter({ type, blogData }: any) {
             placeholder="Meta Description For Blog...."
           />
         </div>
+
+
+
         <div
           style={{
             display: "flex",
             position: "relative",
           }}
         >
-          <div
+          <div className="px-2"
             style={{
-              margin: "1em auto",
-              width: "20%",
               display: "flex",
               // marginLeft: "auto",
               justifyContent: "space-between",
@@ -523,7 +512,7 @@ export default function BlogWriter({ type, blogData }: any) {
               }}
               onClick={() => addHeading()}
             >
-              Add Heading
+            <h1>Add Heading</h1>  
             </button>
             <button
               style={{
@@ -537,7 +526,8 @@ export default function BlogWriter({ type, blogData }: any) {
               }}
               onClick={() => addSubHeading()}
             >
-              Add Sub Heading
+              
+              <h1>Add Sub Heading</h1>  
             </button>
             <button
               style={{
@@ -551,7 +541,7 @@ export default function BlogWriter({ type, blogData }: any) {
               }}
               onClick={() => addParagraph()}
             >
-              Add Paragraph
+            <h1>Add Paragraph</h1>  
             </button>
             <button
               style={{
@@ -564,10 +554,9 @@ export default function BlogWriter({ type, blogData }: any) {
                 cursor: "pointer",
               }}
               onClick={(e) => addImage(e)}
-            >
-              Add Image
+            ><h1>Add Image</h1>  
             </button>
-            <button
+            {/* <button
               style={{
                 margin: "auto",
                 padding: "1em 1em",
@@ -579,8 +568,8 @@ export default function BlogWriter({ type, blogData }: any) {
               }}
               onClick={() => addDocument()}
             >
-              Add Document
-            </button>
+              <h1>Add Document</h1>
+            </button> */}
             <button
               style={{
                 margin: "auto",
@@ -593,7 +582,7 @@ export default function BlogWriter({ type, blogData }: any) {
               }}
               onClick={() => previewBlog()}
             >
-              Preview Blog
+            <h1> Preview Blog</h1> 
             </button>
             <button
               style={{
@@ -645,21 +634,20 @@ export default function BlogWriter({ type, blogData }: any) {
                                   {...provided.draggableProps}
                                   {...provided.dragHandleProps}
                                 >
-                                  <div
+                                  <div className="m-auto p-4"
                                     style={{
                                       display: "flex",
                                       justifyContent: "space-between",
-                                      margin: "2em auto",
                                       alignItems: "center",
                                     }}
                                   >
                                     
                                     {item.type === "HEADING" ? (
-                                      <input
+                                      <input className="border"
                                         style={{
                                           width: "80%",
-                                          padding: "0.5em",
-                                          marginTop: "auto",
+                                          padding: ".5rem",
+                                          margin: "auto",
                                           textAlign: "left",
                                         }}
                                         value={item.value}
@@ -669,11 +657,11 @@ export default function BlogWriter({ type, blogData }: any) {
                                         placeholder={"Add Heading..."}
                                       ></input>
                                     ) : item.type === "SUB_HEADING" ? (
-                                      <input
+                                      <input className="border"
                                         style={{
                                           width: "80%",
                                           padding: "0.5em",
-                                          marginTop: "auto",
+                                          margin: "auto",
                                           textAlign: "left",
                                         }}
                                         placeholder="Add Sub Heading..."
@@ -683,11 +671,11 @@ export default function BlogWriter({ type, blogData }: any) {
                                         }
                                       />
                                     ) : item.type === "PARAGRAPH" ? (
-                                      <textarea
+                                      <textarea className="border"
                                         style={{
                                           width: "80%",
-                                          padding: "0.5em",
-                                          marginTop: "auto",
+                                          padding: ".5rem",
+                                          margin: "auto",
                                           textAlign: "left",
                                           height: "400px",
                                         }}
@@ -698,26 +686,27 @@ export default function BlogWriter({ type, blogData }: any) {
                                         }
                                       />
                                     ) : item.type === "IMAGE" ? (
-                                      <div>
+                                      <div className="m-auto">
                                         {item.value ? (
                                           <></>
                                         ) : (
-                                          <input
+                                          <input className="border "
                                             type="file"
                                             accept="image/*"
                                             onChange={(e) =>
                                               handleImageChange(e, item.id)
                                             }
                                             style={{
-                                              width: "100%",
-                                              padding: "0.5em",
-                                              marginTop: "1em",
+                                              width: "80%",
+                                              padding: ".5rem",
+                                              margin: "auto",
                                               textAlign: "left",
                                             }}
                                           ></input>
                                         )}
                                         {item.value ? (
-                                          <div
+                                          <div 
+                                          className="p-6"
                                             style={{
                                               width: "100%",
                                               display: "flex",
@@ -729,15 +718,9 @@ export default function BlogWriter({ type, blogData }: any) {
                                             height={300}
                                               src={item.value}
                                               alt="Image"
-                                              style={{
-                                                margin: "2em auto",
-                                              }}
+
                                             />
-                                            <input
-                                              style={{
-                                                padding: "0.5em",
-                                                fontSize: "0.8rem",
-                                              }}
+                                            <input className="border text-xs m-4 p-1"
                                               value={item.image}
                                               onChange={(e) =>
                                                 handleImageDescription(

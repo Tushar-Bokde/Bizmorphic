@@ -22,7 +22,7 @@ const Footer = () => {
               </p>
 
               <ul className="social-list flex py-6">
-                <li className="p-2 bg-gray-400   rounded-full mx-2">
+                <li className="p-2 bg-gray-400 hover:bg-gray-300 rounded-full mx-2">
                   <a
                     href="https://www.facebook.com/profile.php?id=100086557179558"
                     className="social-link "
@@ -30,7 +30,7 @@ const Footer = () => {
                     <Facebook />
                   </a>
                 </li>
-                <li className="p-2 bg-gray-400  rounded-full mx-2">
+                <li className="p-2 bg-gray-400  hover:bg-gray-300  rounded-full mx-2">
                   <a
                     href="https://www.facebook.com/profile.php?id=100086557179558"
                     className="social-link "
@@ -38,12 +38,12 @@ const Footer = () => {
                     <Twitter />
                   </a>
                 </li>
-                <li className="p-2 bg-gray-400   rounded-full mx-2">
+                <li className="p-2 bg-gray-400   hover:bg-gray-300  rounded-full mx-2">
                   <a href="#" className="social-link">
                     <YoutubeIcon />
                   </a>
                 </li>
-                <li className="p-2 bg-gray-400  rounded-full mx-2">
+                <li className="p-2 bg-gray-400  hover:bg-gray-300  rounded-full mx-2">
                   <a
                     href="https://www.instagram.com/bizmorphic/"
                     className="social-link "
@@ -134,128 +134,131 @@ const Footer = () => {
               <li>
                 <ul className="insta-post gap-4 grid grid-cols-3 ">
                   <li>
-                    <div className="insta-card">
+                    <div className="insta-card group relative ">
                       <figure className="post-banner">
                         <img
                           src="./assets/images/01.jpg"
                      
                           loading="lazy"
                           alt="instagram post"
-                          className="img-cover rounded-lg"
+                          className="img-cover group-hover:scale-110 rounded-lg inset-0 m-auto group-hover:transition duration-300 cursor-pointer  group-hover:block group-hover:brightness-50"
                         />
                       </figure>
 
-                      {/* <a
+                      <a
                         href="https://www.instagram.com/p/Cc7-u9wMLb3/?img_index=1"
-                        className="card-content absolute"
+                        className="card-content hidden group-hover:inline-block absolute inset-0 group-hover:flex group-hover:items-center group-hover:justify-center"
                       >
-                        <Instagram />
-                      </a> */}
+                        <Instagram color="white" />
+                      </a>
                     </div>
                   </li>
 
                   <li>
-                    <div className="insta-card">
+                  <div className="insta-card group relative ">
                       <figure className="post-banner">
                         <img
                           src="./assets/images/02.jpg"
-                       
+                     
                           loading="lazy"
                           alt="instagram post"
-                          className="img-cover rounded-lg"
+                          className="img-cover group-hover:scale-110 rounded-lg inset-0 m-auto group-hover:transition duration-300 cursor-pointer  group-hover:block group-hover:brightness-50"
                         />
                       </figure>
 
-                      {/* <a
+                    <a
                         href="https://www.instagram.com/p/CeglASvtVOT/"
-                        className="card-content"
+                       className="card-content hidden group-hover:inline-block absolute inset-0 group-hover:flex group-hover:items-center group-hover:justify-center"
                       >
-                        <Instagram /> */}
-                      {/* </a> */}
+                        <Instagram color="white" />
+                      </a>
                     </div>
                   </li>
 
                   <li>
-                    <div className="insta-card">
+                  <div className="insta-card group relative ">
                       <figure className="post-banner">
                         <img
                           src="./assets/images/03.jpg"
-                        
+                     
                           loading="lazy"
                           alt="instagram post"
-                          className="img-cover rounded-lg"
+                          className="img-cover group-hover:scale-110 rounded-lg inset-0 m-auto group-hover:transition duration-300 cursor-pointer  group-hover:block group-hover:brightness-50"
                         />
                       </figure>
 
-                      {/* <a
+                      <a
                         href="https://www.instagram.com/p/CejLjQTNire/?img_index=1"
-                        className="card-content"
+                        className="card-content hidden group-hover:inline-block absolute inset-0 group-hover:flex group-hover:items-center group-hover:justify-center"
                       >
-                        <Instagram />
-                      </a> */}
+                        <Instagram color="white" />
+                      </a>
                     </div>
                   </li>
 
                   <li>
-                    <div className="insta-card">
+                  <div className="insta-card group relative ">
                       <figure className="post-banner">
                         <img
                           src="./assets/images/04.jpg"
-                        
+                     
                           loading="lazy"
                           alt="instagram post"
-                          className="img-cover rounded-lg"
+                          className="img-cover group-hover:scale-110 rounded-lg inset-0 m-auto group-hover:transition duration-300 cursor-pointer  group-hover:block group-hover:brightness-50"
                         />
                       </figure>
 
-                      {/* <a
+
+                      <a
                         href="https://www.instagram.com/p/CgJWI6DAhrz/"
-                        className="card-content"
+                       className="card-content hidden group-hover:inline-block absolute inset-0 group-hover:flex group-hover:items-center group-hover:justify-center"
                       >
-                        <Instagram /> */}
-                      {/* </a> */}
+                        <Instagram color="white" />
+                      </a>
                     </div>
                   </li>
 
                   <li>
-                    <div className="insta-card">
+                  <div className="insta-card group relative ">
                       <figure className="post-banner">
                         <img
                           src="./assets/images/05.jpg"
-                      
+                     
                           loading="lazy"
                           alt="instagram post"
-                          className="img-cover rounded-lg"
+                          className="img-cover group-hover:scale-110 rounded-lg inset-0 m-auto group-hover:transition duration-300 cursor-pointer  group-hover:block group-hover:brightness-50"
                         />
                       </figure>
 
-                      {/* <a
+
+                      <a
                         href="https://www.instagram.com/p/CjiEjyAIFXv/"
-                        className="card-content"
+                        className="card-content hidden group-hover:inline-block absolute inset-0 group-hover:flex group-hover:items-center group-hover:justify-center"
                       >
-                        <Instagram /> */}
-                      {/* </a> */}
+                        <Instagram color="white" />
+                      </a>
                     </div>
                   </li>
 
                   <li>
-                    <div className="insta-card">
+                  <div className="insta-card group relative ">
                       <figure className="post-banner">
                         <img
                           src="./assets/images/06.jpg"
-                       
+                     
                           loading="lazy"
                           alt="instagram post"
-                          className="img-cover rounded-lg"
+                          className="img-cover group-hover:scale-110 rounded-lg inset-0 m-auto group-hover:transition duration-300 cursor-pointer  group-hover:block group-hover:brightness-50"
                         />
                       </figure>
 
-                      {/* <a
+
+                      <a
                         href="https://www.instagram.com/p/CeGzdneMuLi/?img_index=1"
-                        className="card-content"
+                         className="card-content hidden group-hover:inline-block absolute inset-0 group-hover:flex group-hover:items-center group-hover:justify-center"
                       >
-                        <Instagram />
-                      </a> */}
+                        <Instagram color="white" />
+                      </a>
                     </div>
                   </li>
                 </ul>

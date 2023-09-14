@@ -3,11 +3,12 @@
 import { Container, Text } from "@radix-ui/themes";
 import Link from "next/link";
 import { Sun, Moon, Menu } from "lucide-react";
-import React from "react";
+import React, { useEffect } from "react";
 import ProfileButton from "../ui/custom/ProfileButton";
 import { useTheme } from "next-themes";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import { Button } from "../ui/button";
+
 
 
 export type Route = {
@@ -15,48 +16,51 @@ export type Route = {
   label: string;
 };
 
-const routes: Route[] = [
-  {
-    href: "#home",
-    label: "Home",
-  },
-  {
-    href: "#service",
-    label: "Service",
-  },
-  {
-    href: "#feature",
-    label: "Feature",
-  },
-  {
-    href: "#project",
-    label: "Project",
-  },
-  {
-    href: "#blog",
-    label: "Blogs",
-  },
-  {
-    href: "https://calendly.com/mayur_tikundi/30min",
-    label: "Contact Us 🤙",
-  },
-];
-
 const RadixHeader = () => {
-  const { theme, setTheme } = useTheme();
 
+  useEffect(()=>{ return ()=>{}},[])
+
+  const routes: Route[] = [
+    {
+      href: "#home",
+      label: "Home",
+    },
+    {
+      href: "#service",
+      label: "Service",
+    },
+    {
+      href: "#feature",
+      label: "Feature",
+    },
+    {
+      href: "#project",
+      label: "Project",
+    },
+    {
+      href: "/blogs",
+      label: "Blogs",
+    },
+    {
+      href: "https://calendly.com/mayur_tikundi/30min",
+      label: "Contact Us 🤙",
+    }
+  ];
+  const { theme, setTheme } = useTheme();
   function navRoutes(routes: Route[]) {
+    
     return routes.map((route: Route, i: number) => (
+      <> 
       <Button key={i} asChild variant="ghost" className="px-12 md:px-1 ">
-        <Link href={route.href}> 
+        <Link href= {route.href}> 
         <h1>{route.label}</h1>
         </Link>
-      </Button>
+      </Button></>
     ));
   }
 
   return (
-    <header className="sm:flex flex-col sm:justify-between py-3 px-4 border-b">
+    <header className="sm:flex fixed w-full border-b bg-white dark:bg-gray-950 z-10 flex-col sm:justify-between py-3 px-4 ">
       <Container>
         <div className="relative px-4 sm:px-6 lg:px-8 flex h-16 items-center justify-between w-full">
           <div className="flex items-center">
@@ -73,10 +77,16 @@ const RadixHeader = () => {
             </Link>
           </div>
           <nav className=" mx-6 flex items-center space-x-4 lg:space-x-6 hidden md:block">
-            {navRoutes(routes)}
+          {navRoutes(routes)}
           </nav>
+        
           <div className="flex items-center">
-           
+          {/* <Button asChild variant="ghost" className="mx-12  md:px-1 ">
+        <Link href={"https://calendly.com/mayur_tikundi/30min"}> 
+        <h1>{"Contact Us 🤙"}</h1>
+        </Link>
+      </Button> */}
+          <ProfileButton/>
             <Button
               variant={"link"}
               aria-label="Toggle Theme"
