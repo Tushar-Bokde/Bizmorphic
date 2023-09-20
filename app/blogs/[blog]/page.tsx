@@ -65,14 +65,14 @@ const Blog = () => {
     return () => {};
   }, []);
   return (
-    <div className="max-w-6xl  mx-auto pt-12 px-6 md:p-24">
+    <div className="max-w-6xl  mx-auto pt-12 p-12 md:pt-24 md:px-6 md:p-24">
       <div
-        className={`${classes.blogMainContainerMeta} grid grid-cols-1 md:grid-cols-2`}
+        className={`${classes.blogMainContainerMeta} grid grid-cols-1  `}
       >
-        <div className="my-auto ">
+        <div className="my-auto pt-12  ">
           {title && (
             <div className="w-full">
-              <h2 className=" text-4xl font-semibold">{title}</h2>
+              <h2 className=" text-xl md:text-4xl font-semibold">{title}</h2>
             </div>
           )}
            <div className="flex p-4">
@@ -93,7 +93,7 @@ const Blog = () => {
           </div>
         </div>
       
-        <div className="bg-black aspect-video relative">
+        <div className="bg-black aspect-video relative  md:mx-24 ">
           <Image fill alt="Blog Thumnail" src="/assets/images/blog-4.png" />
         </div>
 
@@ -103,11 +103,11 @@ const Blog = () => {
           {items &&
             items.map((item, index) => {
               return item.type === "HEADING" ? (
-                <div className={classes.blogContentsItem}>
+                <div className={`${classes.blogContentsItem} py-4`}>
                   <h2 className="text-2xl font-semibold text-orange-400 ">{item.value}</h2>
                 </div>
               ) : item.type === "SUB_HEADING" ? (
-                <div >
+                <div className={` py-4`}>
                   <h3 >{item.value}</h3>
                 </div>
               ) : item.type === "IMAGE" ? (
@@ -123,7 +123,7 @@ const Blog = () => {
                   </div>
                 </div>
               ) : item.type === "PARAGRAPH" ? (
-                <div className="w-full">
+                <div className="p-4 mx-auto w-full">
                   <p className=" max-w-3xl mx-auto break-words">{item.value}</p>
                 </div>
               ) : item.type === "DOCUMENT" ? (

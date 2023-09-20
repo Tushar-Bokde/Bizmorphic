@@ -175,10 +175,12 @@ const Home = () => {
 
   async function getBlogs() {
     try {
-      const allblogs = await routes.BLOG_MS.APIS.GET_ALL_BLOGS();
-      const filteredBlogz = allblogs.blogs.filter((e:any, i:number)=>{
-        if (i<3) return e
-      })
+      let page = 1;
+      let limit = 3;
+      const allblogs = await routes.BLOG_MS.APIS.GET_ALL_BLOGS({page, limit});
+      const filteredBlogz = allblogs.blogs.filter((e: any, i: number) => {
+        if (i < 3) return e;
+      });
       setBlogs(filteredBlogz);
       return;
     } catch (error) {
@@ -376,7 +378,9 @@ const Home = () => {
                       </h3>
 
                       <p className="card-text">
-                        {"Unlock rapid innovation with our AI expertise, swiftly implementing groundbreaking solutions, and propelling your business' growth."}
+                        {
+                          "Unlock rapid innovation with our AI expertise, swiftly implementing groundbreaking solutions, and propelling your business' growth."
+                        }
                       </p>
                     </div>
                   </div>
@@ -408,7 +412,11 @@ const Home = () => {
           </div>
         </section>
 
-        <section className="section  mx-auto max-w-6xl project" id="project" aria-label="project">
+        <section
+          className="section  mx-auto max-w-6xl project"
+          id="project"
+          aria-label="project"
+        >
           <div className="container ">
             <p className="text-lg flex  justify-center items-center section-subtitle has-before ">
               <li className="list-disc w-6 text-yellow-300 text-4xl "></li>
@@ -624,7 +632,11 @@ const Home = () => {
           </div>
         </section>
 
-        <section className="section blogs mx-auto py-12 max-w-6xl" id="blogs" aria-label="blogs">
+        <section
+          className="section blogs mx-auto py-12 max-w-6xl"
+          id="blogs"
+          aria-label="blogs"
+        >
           <div className="container">
             <p className="text-lg flex pt-12  justify-center items-center section-subtitle has-before ">
               <li className="list-disc w-6 text-yellow-300 text-4xl "></li>Blog
@@ -638,9 +650,9 @@ const Home = () => {
               </span>
             </h2>
             <ul className="grid grid-cols-1 lg:grid-cols-2">
-              <li className="p-4 lg:border-r">
-                <div className="blog-card group md:p-4">
-                  <div className="mx-auto h-32 w-5/6 overflow-hidden mx-auto md:h-60 relative rounded-2xl group ">
+              <li className="p-4 my-auto lg:border-r">
+                <div className="blog-card  group md:p-4">
+                  <div className=" mx-auto h-32 w-5/6 overflow-hidden md:h-60 relative rounded-2xl group ">
                     <Image
                       src="/assets/images/blog-4.png"
                       fill
@@ -650,69 +662,78 @@ const Home = () => {
                     />
                   </div>
                   <div className="wrapper py-2 px-6 col-span-3 ">
-                      <a
-                        href="#"
-                        className="px-2 text-xs flex justify-between publish-date"
-                      >
-                        <span className="flex">
+                    <a
+                      href="#"
+                      className="px-2 text-xs flex justify-between publish-date"
+                    >
+                      <span className="flex">
+                        {" "}
+                        <Clock4 className="w-3 my-auto"></Clock4>
+                        <p className="span my-auto pl-2">
                           {" "}
-                          <Clock4 className="w-3 my-auto"></Clock4>
-                          <p className="span my-auto pl-2">
-                            {" "}
-                            {blogs[0].creationTime}
-                          </p>
-                        </span>
+                          {blogs[0].creationTime}
+                        </p>
+                      </span>
 
-                        <span className="span my-auto pl-2">
-                          {" "}
-                          {blogs[0].name}
-                        </span>
-                      </a>
-                      <div className="flex">
-                        <Link
-                          href={`blogs/${blogs[0].title}`}
-                          className=" group-hover:text-blue-600 font-semibold text-md md:text-2xl tag"
-                        >{blogs[0].title}
-                        </Link>
-                      </div>
-                      <div>
-                        <div className="h3 md:py-4 overflow-hidden">
-                          <p className="card-title text-sm line-clamp-2 overflow-hidden whitespace-pre-wrap">
-                            {blogs[0].metaDescription}
-                          </p>
-                        </div>
+                      <span className="span my-auto pl-2">
+                        {" "}
+                        {blogs[0].name}
+                      </span>
+                    </a>
+                    <div className="flex">
+                      <Link
+                        href={`blogs/${blogs[0].title}`}
+                        className=" group-hover:text-blue-600 font-semibold text-md md:text-2xl tag"
+                      >
+                        {blogs[0].title}
+                      </Link>
+                    </div>
+                    <div>
+                      <div className="h3 md:py-4 overflow-hidden">
+                        <p className="card-title text-sm line-clamp-2 overflow-hidden whitespace-pre-wrap">
+                          {blogs[0].metaDescription}
+                        </p>
                       </div>
                     </div>
+                  </div>
                 </div>
               </li>
-             <li className="px-4">
-        {blogs.map((e, i) => {
-          return (
-            <li key={i} className="" >
-            <div  className="md:p-4 border group grid grid-cols-1 md:grid-cols-3  max-w-6xl  m-auto justify-between">
-              <div className="relative md:rounded-2xl overflow-hidden h-24 col-span-1">
-                <Image
-                        src="/assets/images/blog-4.png"
-                        fill
-                        loading="lazy"
-                        alt="How to gain pro experience ar figma update version"
-                        className="object-cover group-hover:scale-110 transition duration-200"
-                      />
-              </div>
-              <div className="flex flex-col overflow-hidden md:col-span-2 p-4 justify-around ">
-                 {/* <p className="text-xs">{new Date(e.createdOn).toDateString()} </p> */}
-                 <h1 className=" text-lg p-2 group-hover:text-blue-500 font-semibold"> {e.title}</h1>
-                <p className="text-sm line-clamp-2 overflow-hidden whitespace-pre-wrap ">{(e.metaDescription)}</p>
-                
-                <h1 className="pt-1 flex"><Clock4 className="px-1"/>{e.readingTime} mins</h1>
-               
-              </div>
-            
-            </div>
-            </li>
-          );
-        })}
-             </li>
+              <li className="px-12 ">
+                {blogs.map((e, i) => {
+                  return (
+                    <li key={i} className="">
+                      <div className="md:p-4  group grid grid-cols-1 md:grid-cols-3  max-w-6xl  m-auto justify-between">
+                        <div className="relative  aspect-square flex justify-center md:rounded-2xl overflow-hidden  col-span-1">
+                          <Image
+                            src="/assets/images/blog-4.png"
+                            fill
+                            loading="lazy"
+                            alt="How to gain pro experience ar figma update version"
+                            className="object-cover group-hover:scale-110 transition duration-200"
+                          />
+                        </div>
+                        <div className="flex flex-col overflow-hidden md:col-span-2 p-4 justify-around ">
+                          {/* <p className="text-xs">{new Date(e.createdOn).toDateString()} </p> */}
+                          <Link
+                            href={`blogs/${e.title}`}
+                            className=" group-hover:text-blue-600 font-semibold text-md md:text-2xl tag"
+                          >
+                            {e.title}
+                          </Link>
+                          <p className="text-sm line-clamp-2 overflow-hidden whitespace-pre-wrap ">
+                            {e.metaDescription}
+                          </p>
+
+                          <h1 className="pt-1 flex">
+                            <Clock4 className="px-1" />
+                            {e.readingTime} mins
+                          </h1>
+                        </div>
+                      </div>
+                    </li>
+                  );
+                })}
+              </li>
             </ul>
           </div>
         </section>

@@ -1,45 +1,41 @@
-"use client"
+"use client";
 
 import { useState, useEffect, Key } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import classes from "./BlogWriter.module.css"
+import classes from "./BlogWriter.module.css";
 import { v4 as uuidv4 } from "uuid";
 import DocumentPage from "./document/DocumentPage";
 import Image from "next/image";
 import React from "react";
-import { useSession } from 'next-auth/react'
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import routes from "../utils/routes";
 
 export interface Blog {
-
-  id?: string 
+  id?: string;
   image?: string | number | readonly string[] | undefined;
-  value?: string
-  type?: string
-  description?: string,
+  value?: string;
+  type?: string;
+  description?: string;
 }
 
 interface Document {
-  _id: string
-  name: string
+  _id: string;
+  name: string;
   document: {
-    pages: [Pages]
-  }
+    pages: [Pages];
+  };
 }
 
-interface Category {
-}
+interface Category {}
 
 interface Pages {
-  page_no: string | number | any
-
+  page_no: string | number | any;
 }
 
-
 export default function BlogWriter({ type, blogData }: any) {
-  const {data :session } = useSession()
-  const router = useRouter()
+  const { data: session } = useSession();
+  const router = useRouter();
   const [isBrowser, setIsBrowser] = useState(false);
   const [title, setTitle] = useState("");
   const [items, setItems] = useState<Array<Blog>>([]);
@@ -47,13 +43,15 @@ export default function BlogWriter({ type, blogData }: any) {
   const [metaDescription, setMetaDescription] = useState("");
   const [documents, setDocuments] = useState<Array<Document>>([]);
   const [form, setForm] = useState<Document>({
-    _id: '',
-    name: '',
+    _id: "",
+    name: "",
     document: {
-      pages: [{
-        page_no: ''
-      }]
-    }
+      pages: [
+        {
+          page_no: "",
+        },
+      ],
+    },
   });
   const [ifFormIsRemoved, setIfFormIsRemoved] = useState(false);
   const [formSearchValue, setFormSearchValue] = useState("");
@@ -93,7 +91,6 @@ export default function BlogWriter({ type, blogData }: any) {
   }
 
   function addSubHeading(id?: string, index?: string) {
-
     setItems([
       ...items,
       {
@@ -104,7 +101,7 @@ export default function BlogWriter({ type, blogData }: any) {
     ]);
   }
 
-  function addImage(e:any ,id?: string, index?: string) {
+  function addImage(e: any, id?: string, index?: string) {
     setItems([
       ...items,
       {
@@ -120,15 +117,18 @@ export default function BlogWriter({ type, blogData }: any) {
     const newItems = Array.from(items).filter((item) => item.id !== dataId);
     setItems(newItems);
     setIfFormIsRemoved(true);
-    type === "DOCUMENT" && setForm({
-      _id: '',
-      name: '',
-      document: {
-        pages: [{
-          page_no: ''
-        }]
-      }
-    });
+    type === "DOCUMENT" &&
+      setForm({
+        _id: "",
+        name: "",
+        document: {
+          pages: [
+            {
+              page_no: "",
+            },
+          ],
+        },
+      });
     setFormSearchValue("");
   }
 
@@ -164,7 +164,10 @@ export default function BlogWriter({ type, blogData }: any) {
   }
 
   // To Search Document
-  async function handleDocumentSearchChange(e: any, idData: string | undefined) {
+  async function handleDocumentSearchChange(
+    e: any,
+    idData: string | undefined
+  ) {
     e.preventDefault();
     setFormSearchValue(e.target.value);
     const response =
@@ -193,11 +196,11 @@ export default function BlogWriter({ type, blogData }: any) {
   const handleImageChange = async (e: any, contentId: string | undefined) => {
     e.preventDefault();
     let data = new FormData();
-    const image = e.target.files[0]
+    const image = e.target.files[0];
     data.append("image", image, "image.png");
-    data.append("image_name", image.name)
-    const apiData = await routes.BLOG_MS.APIS.UPLOAD_LOCAL_IMAGE_BLOG(data)
-    console.log("this is the api data",apiData,)
+    data.append("image_name", image.name);
+    const apiData = await routes.BLOG_MS.APIS.UPLOAD_LOCAL_IMAGE_BLOG(data);
+    console.log("this is the api data", apiData);
     const newItems = Array.from(items).map((item) => {
       if (item.id === contentId) {
         return {
@@ -247,8 +250,8 @@ export default function BlogWriter({ type, blogData }: any) {
 
   function newItemsToGet() {
     const indexes = (str: string, char: string) => {
-      const indexes : number[]= [];
-      for (let i:number = 0; i < str.length; i++) {
+      const indexes: number[] = [];
+      for (let i: number = 0; i < str.length; i++) {
         if (str[i] === char) {
           indexes.push(i);
           i++;
@@ -298,48 +301,49 @@ export default function BlogWriter({ type, blogData }: any) {
 
   async function saveBlog() {
     // Working for multiple indexes
+     console.log(title,">>>>")
     const newItems = newItemsToGet();
     const data = newItems && {
       name: session?.user?.name,
-      userId: session?.user?.email,
+      username: session?.user?.email,
+      userid: session?.user?.email,
       title: title,
       contents: newItems,
       category: category,
       metaDescription,
-    };  
+    };
+
     const blogForGivenTitle = await routes.BLOG_MS.APIS.GET_BLOG_BY_TITLE(
       title
     );
-    var parsedResponse;
-    if (blogForGivenTitle.name) {
-      try {
-        if (type === "UPDATE" && newItems) {
-          parsedResponse = await routes.BLOG_MS.APIS.UPDATE_BLOG({
-            name:blogData.name,
-            blogAuthentication: blogData.blogAuthentication,
-            contents: newItems,
-            title,
-            readingTime: blogData.readingTime,
-            userid: blogData.userid,
-            username: blogData.username,
-            id: blogData._id,
-            category: category,
-            metaDescription,
-          });
 
-        } else {
-          parsedResponse = await routes.BLOG_MS.APIS.SAVE_BLOG(data);
-          console.log("this is printed",parsedResponse)
-        }
-        const messageToAlert =
-          type === "UPDATE" ? "Blog is Updated" : "Your Blog is Saved";
-        window.alert(messageToAlert);
-      } catch (error: any) {
-        window.alert(`Something went Wrong, ${error}`);
-        console.log(error)
-      }
-    } else {
-      window.alert("Title is Used Befor Please Use another Title");
+
+    var parsedResponse;
+    try {
+      if (blogForGivenTitle.data === null) {
+        parsedResponse = await routes.BLOG_MS.APIS.SAVE_BLOG(data);
+        window.alert( "Blog is Saved!" );
+      }else{ 
+        if (type === "UPDATE" && newItems) {
+        parsedResponse = await routes.BLOG_MS.APIS.UPDATE_BLOG({
+          name: blogData.name,
+          blogAuthentication: blogData.blogAuthentication,
+          contents: newItems,
+          title,
+          readingTime: blogData.readingTime,
+          userid: blogData.userid,
+          username: blogData.username,
+          id: blogData._id,
+          category: category,
+          metaDescription,
+        });
+        window.alert("Your Blog is updated")
+      } else {
+        window.alert("Title is Used Befor Please Use another Title");
+      }}
+    } catch (error: any) {
+      window.alert(`Something went Wrong, ${error}`);
+      console.log(error);
     }
   }
 
@@ -362,31 +366,32 @@ export default function BlogWriter({ type, blogData }: any) {
   }, [type, blogData, ifFormIsRemoved]);
 
   return (
-    <div className={`${classes.blogWriterContainer} py-24 max-w-6xl mx-auto`} >
+    <div className={`${classes.blogWriterContainer} py-24 max-w-6xl mx-auto`}>
       {/* <IdleTimer ref={idleTimerRef} timeout={4000} onIdle={handleIdleChange}> */}
       <header className="App-header p-12">
         <div className="flex p-4">
-        <h1>{type === "UPDATE" ? "Update" : "Write"} Your Blog</h1>
-        <div className="m-auto w-5/6">
-          <input
-            style={{
-              width: "100%",
-              padding: "0.5em",
-            }}
-            value={title}
-            className="border"
-            onChange={(e) => {
-              if (e.target.value.includes("-")) {
-                window.alert("Please Dont include '-' in Title");
-              } else {
-                setTitle(e.target.value);
-              }
-            }}
-            placeholder="Give Your Blog Title....."
-          /></div>
+          <h1>{type === "UPDATE" ? "Update" : "Write"} Your Blog</h1>
+          <div className="m-auto w-5/6">
+            <input
+              style={{
+                width: "100%",
+                padding: "0.5em",
+              }}
+              value={title}
+              className="border"
+              onChange={(e) => {
+                if (e.target.value.includes("-")) {
+                  window.alert("Please Dont include '-' in Title");
+                } else {
+                  setTitle(e.target.value);
+                }
+              }}
+              placeholder="Give Your Blog Title....."
+            />
+          </div>
         </div>
         <div
-        className="p-4"
+          className="p-4"
           style={{
             display: "flex",
             margin: "auto",
@@ -396,7 +401,7 @@ export default function BlogWriter({ type, blogData }: any) {
         >
           <h3>Select Category For the Blog</h3>
           <div
-          className="w-full"
+            className="w-full"
             style={{
               display: "flex",
 
@@ -457,7 +462,7 @@ export default function BlogWriter({ type, blogData }: any) {
           </select> */}
         </div>
         <div
-        className="p-4"
+          className="p-4"
           style={{
             display: "flex",
             justifyContent: "space-around",
@@ -465,7 +470,8 @@ export default function BlogWriter({ type, blogData }: any) {
           }}
         >
           <h3>Meta Description For Blog</h3>
-          <textarea className="border w-5/6"
+          <textarea
+            className="border w-5/6"
             style={{
               margin: "auto",
               height: "150px",
@@ -480,15 +486,14 @@ export default function BlogWriter({ type, blogData }: any) {
           />
         </div>
 
-
-
         <div
           style={{
             display: "flex",
             position: "relative",
           }}
         >
-          <div className="px-2"
+          <div
+            className="px-2"
             style={{
               display: "flex",
               // marginLeft: "auto",
@@ -512,7 +517,7 @@ export default function BlogWriter({ type, blogData }: any) {
               }}
               onClick={() => addHeading()}
             >
-            <h1>Add Heading</h1>  
+              <h1>Add Heading</h1>
             </button>
             <button
               style={{
@@ -526,8 +531,7 @@ export default function BlogWriter({ type, blogData }: any) {
               }}
               onClick={() => addSubHeading()}
             >
-              
-              <h1>Add Sub Heading</h1>  
+              <h1>Add Sub Heading</h1>
             </button>
             <button
               style={{
@@ -541,7 +545,7 @@ export default function BlogWriter({ type, blogData }: any) {
               }}
               onClick={() => addParagraph()}
             >
-            <h1>Add Paragraph</h1>  
+              <h1>Add Paragraph</h1>
             </button>
             <button
               style={{
@@ -554,7 +558,8 @@ export default function BlogWriter({ type, blogData }: any) {
                 cursor: "pointer",
               }}
               onClick={(e) => addImage(e)}
-            ><h1>Add Image</h1>  
+            >
+              <h1>Add Image</h1>
             </button>
             {/* <button
               style={{
@@ -582,7 +587,7 @@ export default function BlogWriter({ type, blogData }: any) {
               }}
               onClick={() => previewBlog()}
             >
-            <h1> Preview Blog</h1> 
+              <h1> Preview Blog</h1>
             </button>
             <button
               style={{
@@ -634,16 +639,17 @@ export default function BlogWriter({ type, blogData }: any) {
                                   {...provided.draggableProps}
                                   {...provided.dragHandleProps}
                                 >
-                                  <div className="m-auto p-4"
+                                  <div
+                                    className="m-auto p-4"
                                     style={{
                                       display: "flex",
                                       justifyContent: "space-between",
                                       alignItems: "center",
                                     }}
                                   >
-                                    
                                     {item.type === "HEADING" ? (
-                                      <input className="border"
+                                      <input
+                                        className="border"
                                         style={{
                                           width: "80%",
                                           padding: ".5rem",
@@ -657,7 +663,8 @@ export default function BlogWriter({ type, blogData }: any) {
                                         placeholder={"Add Heading..."}
                                       ></input>
                                     ) : item.type === "SUB_HEADING" ? (
-                                      <input className="border"
+                                      <input
+                                        className="border"
                                         style={{
                                           width: "80%",
                                           padding: "0.5em",
@@ -671,7 +678,8 @@ export default function BlogWriter({ type, blogData }: any) {
                                         }
                                       />
                                     ) : item.type === "PARAGRAPH" ? (
-                                      <textarea className="border"
+                                      <textarea
+                                        className="border"
                                         style={{
                                           width: "80%",
                                           padding: ".5rem",
@@ -690,7 +698,8 @@ export default function BlogWriter({ type, blogData }: any) {
                                         {item.value ? (
                                           <></>
                                         ) : (
-                                          <input className="border "
+                                          <input
+                                            className="border "
                                             type="file"
                                             accept="image/*"
                                             onChange={(e) =>
@@ -705,8 +714,8 @@ export default function BlogWriter({ type, blogData }: any) {
                                           ></input>
                                         )}
                                         {item.value ? (
-                                          <div 
-                                          className="p-6"
+                                          <div
+                                            className="p-6"
                                             style={{
                                               width: "100%",
                                               display: "flex",
@@ -714,13 +723,13 @@ export default function BlogWriter({ type, blogData }: any) {
                                             }}
                                           >
                                             <Image
-                                            width={500}
-                                            height={300}
+                                              width={500}
+                                              height={300}
                                               src={item.value}
                                               alt="Image"
-
                                             />
-                                            <input className="border text-xs m-4 p-1"
+                                            <input
+                                              className="border text-xs m-4 p-1"
                                               value={item.image}
                                               onChange={(e) =>
                                                 handleImageDescription(

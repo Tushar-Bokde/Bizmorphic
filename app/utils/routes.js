@@ -1,8 +1,8 @@
 import { apiDelete, apiGet, apiPost, apiPostImage, apiPut } from "./Api";
 const routes = {
   BLOG_MS: {
-    BASE_PATH: process.env.NEXT_PUBLIC_BLOGS_API_URL,
-    BASE_PATH: "http://localhost:3001/blogms/api/v1",
+    BASE_PATH: process.env.NEXT_PUBLIC_BLOGS_API_URL, 
+    // BASE_PATH: "http://localhost:3001/blogms/api/v1",
     APIS: {
       // GET API
       GET_BLOG_CAMPAING_BY_ID: async (data) => {
@@ -30,7 +30,9 @@ const routes = {
         return await apiGet(`/blogdesign/organization/${id}`, "BLOG_MS");
       },
       GET_ALL_BLOGS: async (data) => {
-        return await apiGet(`/blog/all/${data}`, "BLOG_MS");
+        let page = data.page ? data.page : 1
+        let limit = data.limit ? data.limit : 10
+        return await apiGet(`/blog/all?page=${data.page}&limit=${data.limit} `, "BLOG_MS");
       },
 
       GET_BLOG_COMMENTBYID: async (data) => {
